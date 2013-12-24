@@ -1,7 +1,7 @@
 README
 ======
 
-BackboneJS marionette project template for microscopejs rest API
+BackboneJS marionette POC
 
 Requirements
 ------------
@@ -22,4 +22,4 @@ Installation
 Licence
 -------
 
-microscope-backbone is released under the MIT license.
+movies-backbone is released under the MIT license.
