@@ -2,23 +2,25 @@ define([
     'backbone', 
     'marionette',
     'models/movie',
-    'models/user',
     'collections/favoritesMovies',
     'views/movie/movieListView',
     'views/movie/movieShowView',
     'views/user/userNavbarInfosView',
-    'views/movie/movieFavoritesListView'
+    'views/movie/movieFavoritesListView',
+    'views/user/userProfileView',
+    'views/user/userEditProfileView',
     ],
     function (
         Backbone, 
         Marionette, 
-        Movie, 
-        User, 
+        Movie,
         FavoritesMovies, 
         MovieListView, 
         MovieShowView, 
         UserNavbarInfosView,
-        MovieFavoritesListView
+        MovieFavoritesListView,
+        UserProfileView,
+        UserEditProfileView
         ) {
 
         var controller = Backbone.Marionette.Controller.extend({
@@ -26,12 +28,11 @@ define([
             initialize:function (options) {
                 var self = this;
                 this.App = options.App;
-
-                this.user = new User();
+                this.user = options.user;
                 this.listenTo(this.user, 'change', this.showUserInfosHeader);
-                this.user.fetch({success:function () {
-                    self.showFavoritesMovies(self.user.id);
-                }});
+
+                this.showFavoritesMovies();
+                this.showUserInfosHeader();
             },
 
             /**
@@ -57,16 +58,33 @@ define([
              * display user info view in navigation bar.
              */
             showUserInfosHeader: function () {
-                var self = this;
-                self.App.navigationRegion.show(new UserNavbarInfosView({model: self.user}));
+                this.App.navigationRegion.show(new UserNavbarInfosView({model: this.user}));
             },
 
-            showFavoritesMovies: function (id) {
+            /**
+             * show favorites movies in sidebar region
+             */
+            showFavoritesMovies: function () {
                 var self = this;
+                var id = this.user.get('id');
                 var favoritesMovies = new FavoritesMovies({userId: id});
                 favoritesMovies.fetch({success: function () {
                     self.App.sidebarRegion.show(new MovieFavoritesListView({collection: favoritesMovies}));
                 }});
+            },
+
+            /**
+             * show profile view in mainRegion
+             */
+            profile: function () {
+                this.App.mainRegion.show(new UserProfileView({model: this.user}));
+            },
+
+            /**
+             * edit profile view
+             */
+            editProfile: function () {
+                this.App.mainRegion.show(new UserEditProfileView({model: this.user}));
             }
         });
 

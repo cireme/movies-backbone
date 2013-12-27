@@ -2,8 +2,9 @@ define([
 	'backbone',
 	'marionette',
 	'routes/router',
-	'controllers/controller'
-	], function (Backbone, Marionette, Router, Controller) {
+	'controllers/controller',
+	'models/user',
+	], function (Backbone, Marionette, Router, Controller, User) {
 
 	    var App = new Marionette.Application();
 
@@ -15,17 +16,29 @@ define([
 
 	    App.addInitializer(function() {
 
-			var router = new Router({
-				controller: new Controller({App: App})
-			});
+	    	var user = new User();
+	    	user.fetch({
 
-			Backbone.history.start({
-				pushState: false,
-				root: '/',
-				silent: true
-    		});
-    		
-    		Backbone.history.loadUrl();
+	    		success: function () {
+
+			    	var router = new Router({
+						controller: new Controller({ App: App, user: user })
+					});
+
+					Backbone.history.start({
+						pushState: false,
+						root: '/',
+						silent: true
+		    		});
+		    		
+		    		Backbone.history.loadUrl();
+	    		},
+
+	    		error: function () {
+	    			alert('can\'t retrieve user informations');
+	    		}
+	    	});
+
 	    });
 
 	    return App;

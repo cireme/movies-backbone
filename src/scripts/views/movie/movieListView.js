@@ -12,7 +12,11 @@ define([
                 this.collection.fetch();
 	    	},
 
-	    	itemView: MovieItemView
+	    	itemView: MovieItemView,
+
+	    	onRender: function () {
+                console.log("attach infinite scroll plugin here ");
+            },
 	    });
 	   
 	    return MovieListView;

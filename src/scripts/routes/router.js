@@ -9,8 +9,10 @@ define([
          * routes handler
          */
         appRoutes: {
-            ""       : "home",
-            "movies/:id"       : "showMovie"
+            "" : "home",
+            "movies/:id" : "showMovie",
+            "profile" : "profile",
+            "profile/edit" : "editProfile"
         }
     });
 

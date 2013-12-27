@@ -7524,7 +7524,7 @@ td.visible-print {
   top: 15px;
   bottom: 15px;
   left: 15px;
-  right: 380px;
+  right: 330px;
   background-color: #fff;
   border: #ccc solid 1px;
   padding: 10px 16px;
@@ -7536,7 +7536,7 @@ td.visible-print {
   position: absolute;
   top: 15px;
   bottom: 15px;
-  width: 350px;
+  width: 300px;
   right: 15px;
   background-color: #fff;
   border: #ccc solid 1px;
