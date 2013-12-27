@@ -74,10 +74,13 @@ define([
             },
 
             /**
-             * show profile view in mainRegion
+             * show profile view in mainRegion and refresh user infos.
              */
             profile: function () {
-                this.App.mainRegion.show(new UserProfileView({model: this.user}));
+                var self = this;
+                this.user.fetch({success: function() {
+                    self.App.mainRegion.show(new UserProfileView({model: self.user}));
+                }});
             },
 
             /**

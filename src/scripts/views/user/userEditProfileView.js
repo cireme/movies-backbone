@@ -8,11 +8,18 @@ define([
    
         var UserEditProfileView = Backbone.Marionette.ItemView.extend({
 
+            /**
+             * initialize view
+             * instantiate view model and bind backbone validation.
+             */
         	initialize: function () {
-                this.viewmodel = this.model.clone();
-                console.log(this.viewmodel);
-                Backbone.Validation.bind(this, {model: this.viewmodel});
+                this.viewModel = this.model.clone();
+                Backbone.Validation.bind(this, { model: this.viewModel });
         	},
+
+            onRender: function () {
+                //this.stickit(this.viewModel);
+            },
 
         	template: template,
 
@@ -33,19 +40,28 @@ define([
             },
 
             events:{
-                'submit @ui.form': 'onFormSubmit'
-/*              'keyup @ui.firstnameInput': 'onChangeFirstnameInput',
+                'submit @ui.form': 'onFormSubmit',
+                'keyup @ui.firstnameInput': 'onChangeFirstnameInput',
                 'keyup @ui.lastnameInput': 'onChangeLastnameInput',
-                'keyup @ui.emailInput': 'onChangeEmailInput'*/
+                'keyup @ui.emailInput': 'onChangeEmailInput'
             },
+
+          /*bindings: {
+                '#firstname': {observe: 'firstname', onSet: 'onChangeFirstnameInput'},
+                '#lastname': {observe: 'lastname', onSet: 'onChangeLastnameInput'},
+                '#email': {observe: 'email', onSet: 'onChangeEmailInput'},
+                '#city': 'city',
+                '#birthday': 'birthday'
+            },*/
 
             /**
              * handled when user form submited
              */
             onFormSubmit: function () {
-                console.log(this.viewmodel);
-                if(this.viewmodel.isValid(true)){
-                    this.model = this.viewmodel.clone();
+                this.updateViewModelFromInputs();
+
+                if(this.viewModel.isValid(true)){
+                    this.model.set(this.viewModel.attributes);
                     this.model.save(null, {success: function () {
                         Backbone.history.navigate('#/profile');
                     }});
@@ -56,46 +72,34 @@ define([
                 return false;
             },
 
-            /**
-             * Backbone stickit sample code for two way data-binding.
-             */
+            updateViewModelFromInputs: function () {
+                this.viewModel.set('firstname', this.ui.firstnameInput.val());
+                this.viewModel.set('lastname', this.ui.lastnameInput.val());
+                this.viewModel.set('email', this.ui.emailInput.val());
+                this.viewModel.set('city', this.ui.cityInput.val());
+                this.viewModel.set('birthday', this.ui.birthdayInput.val());
+            },
             
-            bindings: {
-                '#firstname': {observe: 'firstname', onSet: 'onChangeFirstnameInput'},
-                '#lastname': {observe: 'lastname', onSet: 'onChangeLastnameInput'},
-                '#email': {observe: 'email', onSet: 'onChangeEmailInput'},
-                '#city': {observe: 'city', onSet: 'onSetCity'},
-                '#birthday': {observe: 'birthday', onSet: 'onSetBirthday'}
-            },
-
-            onRender: function () {
-                this.stickit(this.viewmodel);
-            },
-
-            /**
-             * set model properties from form inputs values.
-             */
-/*            setModelProperties: function () {
-                this.viewmodel.set("firstname", this.ui.firstnameInput.val());
-                this.viewmodel.set("lastname", this.ui.lastnameInput.val());
-                this.viewmodel.set("email", this.ui.emailInput.val());
-                this.viewmodel.set("city", this.ui.cityInput.val());
-                this.viewmodel.set("birthday", this.ui.birthdayInput.val());
-            },*/
-
-            onChangeFirstnameInput: function (value, options) {
-                var errorMessage = this.viewmodel.preValidate('firstname', value);
+            onChangeFirstnameInput: function (e) {
+                var errorMessage = this.viewModel.preValidate('firstname', this.ui.firstnameInput.val());
                 this.ui.firstnameValidator.html(errorMessage);
             },
 
-            onChangeLastnameInput: function (value, options) {
-                var errorMessage = this.viewmodel.preValidate('lastname', value);
+            onChangeLastnameInput: function (e) {
+                var errorMessage = this.viewModel.preValidate('lastname', this.ui.lastnameInput.val());
                 this.ui.lastnameValidator.html(errorMessage);
             },
 
-            onChangeEmailInput: function (value, options) {
-                var errorMessage = this.viewmodel.preValidate('email', value);
+            onChangeEmailInput: function (e) {
+                var errorMessage = this.viewModel.preValidate('email', this.ui.emailInput.val());
                 this.ui.emailValidator.html(errorMessage);
+            },
+
+            /**
+             * remove stickit two-way binding
+             */
+            onBeforeClose: function(){
+                //this.unstickit();
             }
 
         });
