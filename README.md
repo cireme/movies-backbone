@@ -19,6 +19,13 @@ Installation
 	npm install
 	grunt run
 
+Build production apps
+---------------------
+
+	grunt production
+
+Ready to use production application can be found in /build folder.
+
 Licence
 -------
 
