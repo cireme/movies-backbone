@@ -45,6 +45,14 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['run']);
 	grunt.registerTask('move', ['copy:assets', 'copy:src', 'copy:vendors']);
 	grunt.registerTask('build', ['clean', 'move', 'stylus:dev', 'concat']);
-	grunt.registerTask('run', ['build', 'connect', 'watch']);
-	grunt.registerTask('production', ['build', 'concat:production', 'copy:production', 'stylus:production', 'requirejs']);
+	grunt.registerTask('run', ['build', 'connect:debug', 'watch']);
+	grunt.registerTask('production', [
+		'clean',
+		'build',
+		'concat:production',
+		'copy:production',
+		'stylus:production',
+		'requirejs',
+		'connect:release'
+	]);
 };

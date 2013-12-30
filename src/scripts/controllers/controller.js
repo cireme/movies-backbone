@@ -9,6 +9,7 @@ define([
     'views/movie/movieFavoritesListView',
     'views/user/userProfileView',
     'views/user/userEditProfileView',
+    'views/shared/movieSearchForm',
     ],
     function (
         Backbone, 
@@ -20,14 +21,15 @@ define([
         UserNavbarInfosView,
         MovieFavoritesListView,
         UserProfileView,
-        UserEditProfileView
+        UserEditProfileView,
+        MovieSearchForm
         ) {
 
         var controller = Backbone.Marionette.Controller.extend({
 
             initialize:function (options) {
-                var self = this;
                 this.App = options.App;
+                this.vent = _.extend({}, Backbone.Events);
                 this.user = options.user;
                 this.listenTo(this.user, 'change', this.showUserInfosHeader);
 
@@ -50,7 +52,7 @@ define([
                 var self = this;
                 var movie = new Movie({id: id});
                 movie.fetch({success: function () {
-                    self.App.mainRegion.show(new MovieShowView({model: movie}));
+                    self.App.mainRegion.show(new MovieShowView({model: movie, vent: self.vent}));
                 }});
             },
 
@@ -69,7 +71,7 @@ define([
                 var id = this.user.get('id');
                 var favoritesMovies = new FavoritesMovies({userId: id});
                 favoritesMovies.fetch({success: function () {
-                    self.App.sidebarRegion.show(new MovieFavoritesListView({collection: favoritesMovies}));
+                    self.App.sidebarRegion.show(new MovieFavoritesListView({collection: favoritesMovies, vent: self.vent }));
                 }});
             },
 

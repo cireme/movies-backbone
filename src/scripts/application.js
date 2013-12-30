@@ -35,7 +35,7 @@ define([
 	    		},
 
 	    		error: function () {
-	    			alert('can\'t retrieve user informations');
+	    			alert('error during retrieve user informations, you maybe be have to clear your browser cache !!!');
 	    		}
 	    	});
 

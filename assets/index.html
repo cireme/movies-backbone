@@ -16,38 +16,34 @@
   <body>
 
   	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-  		<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#/">Backbone-movies</a>
+		</div>
 
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#/">Backbone-movies</a>
-			</div>
-
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					
-				</ul>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
 				
-				<div id="navigationContent"></div>
-			</div>
-	  </div>
+			</ul>
+			
+			<div id="navigationContent"></div>
+		</div>
 	</nav>
     
 	<div id="content">
 		<div id="mainContent">
-			<img src="/images/spinner.gif" class="spinner">
+			<img class="spinner">
 		</div>
 		<div id="sideContent">
-			<img src="/images/spinner.gif" class="spinner text-center">
+			<img class="spinner text-center">
 		</div>
 	</div>
 	
 	<script src="scripts/index.js"></script>
-	<!--<script data-main="scripts/index.js" src="scripts/vendors/require.js"></script>-->
   </body>
 </html>

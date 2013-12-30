@@ -1,3 +1,3 @@
 module.exports = {
-	run: ['<%= configs.wwwFolder %>/*']
+	run: ['<%= configs.wwwFolder %>/*', 'build/*']
 }

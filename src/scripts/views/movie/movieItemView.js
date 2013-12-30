@@ -6,11 +6,11 @@ define([
    
 		var MovieItemView = Backbone.Marionette.ItemView.extend({
 
-		  	template: template,
-
 		  	initialize: function () {
 		  		
 		  	},
+		  	
+		  	template: template,
 
 		  	ui:{
 		  		item: '.movie-item'

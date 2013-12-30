@@ -37,7 +37,8 @@ module.exports = {
 		files:[
 			// application assets
 			{expand: true, cwd: '<%= configs.bower %>/bootstrap/dist/fonts/', src: ['**'], dest: 'build/fonts/'},
-	    	{expand: true, cwd: '<%= configs.assetsFolder %>/', src: ['**'], dest: 'build/'}
+	    	{expand: true, cwd: '<%= configs.assetsFolder %>/', src: ['**'], dest: 'build/'},
+	    	{src: '<%= configs.bower %>/animate.css/animate.css', dest: '<%= configs.wwwFolder %>/styles/animate.css'}
 		]
 	}
 };
