@@ -6,7 +6,7 @@ BackboneJS marionette POC that using [http://gangofbb.bhtz.fr/](http://gangofbb.
 Illustrate how to build backbone marionette single page application with requirejs.
 Grunt tasks can build production application with one index.js file (vendors, application and precompiled handlebars templates).
 
-You have to create account and sign in in same browser.
+You have to create account and signIn in same browser.
 
 Requirements
 ------------
@@ -16,9 +16,12 @@ Requirements
 	npm
 	stylus
 	bower
+	git
 
 Installation
 ------------
+
+Run the following commands:
 
 	bower install
 	npm install
