@@ -3,7 +3,7 @@ define([
     'marionette',
     'models/movie',
     'collections/favoritesMovies',
-    'views/movie/movieListView',
+    'views/movie/movieCatalogView',
     'views/movie/movieShowView',
     'views/user/userNavbarInfosView',
     'views/movie/movieFavoritesListView',
@@ -16,7 +16,7 @@ define([
         Marionette, 
         Movie,
         FavoritesMovies, 
-        MovieListView, 
+        MovieCatalogView,
         MovieShowView, 
         UserNavbarInfosView,
         MovieFavoritesListView,
@@ -29,9 +29,8 @@ define([
 
             initialize:function (options) {
                 this.App = options.App;
-                this.vent = _.extend({}, Backbone.Events);
                 this.user = options.user;
-                this.listenTo(this.user, 'change', this.showUserInfosHeader);
+                this.vent = _.extend({}, Backbone.Events);
 
                 this.showFavoritesMovies();
                 this.showUserInfosHeader();
@@ -40,8 +39,8 @@ define([
             /**
              * home view - listing movies
              */
-            home: function(){
-                this.App.mainRegion.show(new MovieListView());
+            home: function() {
+                this.App.mainRegion.show(new MovieCatalogView());
             },
 
             /**

@@ -1,45 +1,47 @@
 define([
-	'backbone',
-	'marionette',
-	'routes/router',
-	'controllers/controller',
-	'models/user',
-	], function (Backbone, Marionette, Router, Controller, User) {
+    'marionette',
+    'routes/router',
+    'controllers/controller',
+    'models/user',
+], function(Marionette, Router, Controller, User) {
 
-	    var App = new Marionette.Application();
+    var App = new Marionette.Application();
 
-    	App.addRegions({
-        	navigationRegion: "#navigationContent",
-        	mainRegion: "#mainContent",
-        	sidebarRegion: '#sideContent'
-    	});
+    App.addRegions({
+        navigationRegion: "#navigationContent",
+        mainRegion: "#mainContent",
+        sidebarRegion: '#sideContent'
+    });
 
-	    App.addInitializer(function() {
+    App.addInitializer(function() {
 
-	    	var user = new User();
-	    	user.fetch({
+        var user = new User();
+        user.fetch({
 
-	    		success: function () {
+            success: function() {
 
-			    	var router = new Router({
-						controller: new Controller({ App: App, user: user })
-					});
+                var router = new Router({
+                    controller: new Controller({
+                        App: App,
+                        user: user
+                    })
+                });
 
-					Backbone.history.start({
-						pushState: false,
-						root: '/',
-						silent: true
-		    		});
-		    		
-		    		Backbone.history.loadUrl();
-	    		},
+                Backbone.history.start({
+                    pushState: false,
+                    root: '/',
+                    silent: true
+                });
 
-	    		error: function () {
-	    			alert('error during retrieve user informations, you maybe be have to clear your browser cache !!!');
-	    		}
-	    	});
+                Backbone.history.loadUrl();
+            },
 
-	    });
+            error: function() {
+                alert('error during retrieve user informations, you maybe have to clear your browser cache !!!');
+            }
+        });
 
-	    return App;
+    });
+
+    return App;
 });

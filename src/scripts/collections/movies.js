@@ -1,7 +1,8 @@
 define([
 	'backbone',
 	'models/movie'
-	], function(Backbone, Movie){
+	],
+	function(Backbone, Movie){
 
 		var MovieCollection = Backbone.Collection.extend({
 	  		model: Movie,

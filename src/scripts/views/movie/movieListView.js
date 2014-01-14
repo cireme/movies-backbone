@@ -1,48 +1,49 @@
 define([
-	'jquery',
-	'backbone',
-	'marionette',
-	'collections/movies',
-	'views/shared/movieSearchForm',
-	'views/movie/movieItemView',
-	'hbs!templates/movie/list'
-	], function($, Backbone, Marionette, MovieCollection, MovieSearchForm, MovieItemView, template) {
-   
-	    var MovieListView = Backbone.Marionette.CompositeView.extend({
+        'marionette',
+        'views/movie/movieItemView',
+    ],
+    function(Marionette, MovieItemView) {
 
-	    	initialize: function () {
-	    		var self = this;
-				this.collection = new MovieCollection();
-                this.collection.fetch();
-                this.vent = _.extend({}, Backbone.Events);
-                this.movieSearchForm = new MovieSearchForm({vent: this.vent});
+        return Backbone.Marionette.CollectionView.extend({
 
-                this.vent.on('movieFilter', function (movieFilter) {
-                	self.fetchMovies(movieFilter);
+            itemView: MovieItemView,
+            className: 'movie-list',
+
+            initialize: function() {
+                this.page = 1;
+                this.isLoading = false;
+                this.isAllDataLoaded = false;
+            },
+
+            events: {
+                'scroll': 'checkScroll'
+            },
+
+            checkScroll: function() {
+                var triggerPoint = 50;
+                if (!this.isLoading && !this.isAllDataLoaded && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight) {
+                    this.page += 1;
+                    this.loadNextMovies();
+                }
+            },
+
+            loadNextMovies: function() {
+                var self = this;
+                this.isLoading = true;
+
+                this.collection.fetch({
+                    data: {
+                        limit: 10 * this.page
+                    },
+                    success: function(movies) {
+                        self.isLoading = false;
+                        self.isAllDataLoaded = movies.length < (self.page * 10);
+                    },
+                    error: function() {
+                        self.isLoading = false;
+                        console.log('error during fetching data');
+                    }
                 });
-	    	},
-
-	    	template: template,
-	    	itemView: MovieItemView,
-			template: template,
-	      	itemViewContainer: '.movie-list',
-
-	      	ui:{
-	      		searchFormArea: '.searchFormArea'
-	      	},
-
-	      	onRender: function () {
-	      		this.ui.searchFormArea.html(this.movieSearchForm.render().el);
-	      	},
-
-            fetchMovies: function (filterModel) {
-            	var self = this;
-            	console.log(filterModel);
-            	this.collection.fetch({
-            		data: filterModel
-            	});
             }
-	    });
-	   
-	    return MovieListView;
-});
+        });
+    });

@@ -1,51 +1,69 @@
 define([
-	'backbone',
-	'marionette',
-	'collections/categories',
-	'views/category/categoryItemView',
-	'hbs!templates/shared/movieSearchForm'
-	], function(Backbone, Marionette, Categories, CategoryItemView, template) {
-   
-    var MovieSearchForm = Backbone.Marionette.CompositeView.extend({
+        'backbone',
+        'marionette',
+        'collections/categories',
+        'hbs!templates/shared/movieSearchForm'
+    ],
+    function(Backbone, Marionette, Categories, template) {
 
-    	initialize: function (options) {
-    		this.vent = options.vent;
-    		this.filterModel = {categoryId : null, keyword: null};
-    		this.collection = new Categories();
-			this.collection.fetch();
-    	},
+        var MovieSearchForm = Backbone.Marionette.ItemView.extend({
 
-		template: template,
-		itemView: CategoryItemView,
-		itemViewContainer: '.category-list',
+            template: template,
 
-		ui:{
-      		searchForm: '#searchForm',
-      		filterLabels: '.category-item',
-      		keywordInput: 'input[name=keyword]'
-      	},
+            ui: {
+                searchForm: '#searchForm',
+                filterLabels: '.category-item',
+                keywordInput: 'input[name=keyword]'
+            },
 
-      	events:{
-      		'submit @ui.searchForm': 'onSearchFormSubmit',
-      		'click @ui.filterLabels': 'onClickCategoryFilter'
-      	},
+            events: {
+                'submit @ui.searchForm': 'onSearchFormSubmit',
+                'click @ui.filterLabels': 'onClickCategoryFilter'
+            },
 
+            modelEvents: {
+                'change': 'render'
+            },
 
-        onSearchFormSubmit: function (e) {
-			this.filterModel.keyword = this.ui.keywordInput.val();
-			this.vent.trigger('movieFilter', this.filterModel);
+            initialize: function(options) {
+                this.model = new Backbone.Model({
+                    categoryId: null,
+                    keyword: '',
+                    categories: []
+                });
 
-        	return false;
-        },
+                var categories = new Categories(),
+                    self = this;
+                categories.fetch().done(function(data, textStatus, jqXHR) {
+                    self.model.set('categories', categories.toJSON());
+                });
+            },
 
-        onClickCategoryFilter: function (e) {
-        	var categoryId = $(e.target).find('input[type=radio]').val();
+            onSearchFormSubmit: function(event) {
+                this.model.keyword = this.ui.keywordInput.val();
 
-        	this.filterModel.categoryId = categoryId;
-        	this.filterModel.keyword = this.ui.keywordInput.val();
-        	this.vent.trigger('movieFilter', this.filterModel);
-        },
+                this.collection.fetch({
+                    data: {
+                        keyword: this.model.keyword,
+                        categoryId: this.model.categoryId
+                    }
+                });
+                event.preventDefault();
+            },
+
+            onClickCategoryFilter: function(event) {
+                var categoryId = $(event.target).find('input[type=radio]').val();
+
+                this.model.categoryId = categoryId;
+                this.model.keyword = this.ui.keywordInput.val();
+                this.collection.fetch({
+                    data: {
+                        keyword: this.model.keyword,
+                        categoryId: this.model.categoryId
+                    }
+                });
+            }
+        });
+
+        return MovieSearchForm;
     });
-   
-    return MovieSearchForm;
-});

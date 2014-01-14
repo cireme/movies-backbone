@@ -13,10 +13,10 @@ define(['backbone', 'backbone-validation'], function(Backbone, BackboneValidatio
 		},
 
 		validation: {
-
 			firstname: {
 				required: true,
-				msg: 'Please enter a firstname'
+				minLength: 2,
+				msg: 'Please enter a firstname with 2 caracters min'
 			},
 
 			lastname: {
