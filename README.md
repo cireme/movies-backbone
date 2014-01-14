@@ -53,6 +53,7 @@ Usefull link
 * [http://bower.io/](http://bower.io/) -- Bower documentation (frontend package manager).
 * [http://learnboost.github.io/stylus/](http://learnboost.github.io/stylus/) -- Stylus documentation (CSS preprocessor).
 * [http://nodejs.org/](http://nodejs.org/) -- NodeJS documentation.
+* [http://git-scm.com/](http://git-scm.com/) -- Git documentation (distributed version control system).
 
 Licence
 -------
