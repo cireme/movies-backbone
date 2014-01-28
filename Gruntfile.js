@@ -11,6 +11,8 @@ module.exports = function(grunt) {
     var concat = require('./grunt_tasks/concat');
     var watch = require('./grunt_tasks/watch');
     var requirejs = require('./grunt_tasks/requirejs');
+    var sloc = require('./grunt_tasks/sloc');
+
 
     /**
      * initialize configuration
@@ -25,7 +27,8 @@ module.exports = function(grunt) {
         connect: connect,
         concat: concat,
         watch: watch,
-        requirejs: requirejs
+        requirejs: requirejs,
+        sloc: sloc
     });
 
     /**
@@ -38,6 +41,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-sloc');
 
     /**
      * register tasks.

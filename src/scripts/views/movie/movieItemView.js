@@ -1,29 +1,25 @@
 define([
-	'backbone',
-	'marionette',
-	'hbs!templates/movie/item'
-	], function(Backbone, Marionette, template) {
-   
-		var MovieItemView = Backbone.Marionette.ItemView.extend({
+    'backbone',
+    'marionette',
+    'hbs!templates/movie/item'
+], function(Backbone, Marionette, template) {
 
-		  	initialize: function () {
-		  		
-		  	},
-		  	
-		  	template: template,
+    var MovieItemView = Backbone.Marionette.ItemView.extend({
+        tagName: 'div',
+        className: 'panel panel-default pull-left movie-item animated fadeIn',
 
-		  	ui:{
-		  		item: '.movie-item'
-		  	},
+        template: template,
 
-		  	events:{
-		  		'click @ui.item': 'onItemClick'
-		  	},
+        events: {
+            'click': 'onItemClick'
+        },
 
-		  	onItemClick: function () {
-		  		Backbone.history.navigate('#/movies/'+this.model.get('id'));
-		  	}
-		});
+        initialize: function() {},
 
-		return MovieItemView;
+        onItemClick: function() {
+            Backbone.history.navigate('#/movies/' + this.model.get('id'));
+        }
+    });
+
+    return MovieItemView;
 });
