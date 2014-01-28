@@ -5,7 +5,7 @@ define([
 ], function(Backbone, Marionette, template) {
 
     var MovieItemView = Backbone.Marionette.ItemView.extend({
-        tagName: 'div',
+
         className: 'panel panel-default pull-left movie-item animated fadeIn',
 
         template: template,
