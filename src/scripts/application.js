@@ -5,14 +5,22 @@ define([
     'models/user',
 ], function(Marionette, Router, Controller, User) {
 
+    // Create new marionette application
+    // 
     var App = new Marionette.Application();
 
+    //
+    // Define region in application.
+    //
     App.addRegions({
         navigationRegion: "#navigationContent",
         mainRegion: "#mainContent",
         sidebarRegion: '#sideContent'
     });
 
+    //
+    // Add application initializer.
+    //
     App.addInitializer(function() {
 
         var user = new User();

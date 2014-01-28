@@ -12,6 +12,7 @@ module.exports = function(grunt) {
     var watch = require('./grunt_tasks/watch');
     var requirejs = require('./grunt_tasks/requirejs');
     var sloc = require('./grunt_tasks/sloc');
+    var docco = require('./grunt_tasks/docco');
 
 
     /**
@@ -28,7 +29,8 @@ module.exports = function(grunt) {
         concat: concat,
         watch: watch,
         requirejs: requirejs,
-        sloc: sloc
+        sloc: sloc,
+        docco: docco
     });
 
     /**
@@ -42,11 +44,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-sloc');
+    grunt.loadNpmTasks('grunt-docco');
 
     /**
      * register tasks.
      */
     grunt.registerTask('default', ['debug']);
+    grunt.registerTask('doc', ['docco']);
     grunt.registerTask('move', ['copy:assets', 'copy:src', 'copy:vendors']);
     grunt.registerTask('build', ['clean', 'move', 'stylus:dev', 'concat']);
     grunt.registerTask('debug', ['build', 'connect:debug', 'watch']);
