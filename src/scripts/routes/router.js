@@ -1,20 +1,20 @@
 define([
-	'backbone',
+    'backbone',
     'marionette'
-	], function(Backbone, Marionette){
-	
-	var Router = Backbone.Marionette.AppRouter.extend({
+], function(Backbone, Marionette) {
+
+    var Router = Backbone.Marionette.AppRouter.extend({
 
         /**
-         * routes handler
+         * routes handler - call function from routes handler.
          */
         appRoutes: {
-            "" : "home",
-            "movies/:id" : "showMovie",
-            "profile" : "profile",
-            "profile/edit" : "editProfile"
+            "": "home",
+            "movies/:id": "showMovie",
+            "profile": "profile",
+            "profile/edit": "editProfile"
         }
     });
 
-	return Router;
+    return Router;
 });

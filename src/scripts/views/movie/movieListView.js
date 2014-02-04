@@ -19,6 +19,9 @@ define([
                 'scroll': 'checkScroll'
             },
 
+            //
+            // Check for infinite scroll event.
+            //
             checkScroll: function() {
                 var triggerPoint = 50;
                 if (!this.isLoading && !this.isAllDataLoaded && this.el.scrollTop + this.el.clientHeight + triggerPoint > this.el.scrollHeight) {

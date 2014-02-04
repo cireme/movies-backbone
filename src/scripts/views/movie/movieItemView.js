@@ -16,6 +16,9 @@ define([
 
         initialize: function() {},
 
+        //
+        // Call backbone history to navigate to other view.
+        //
         onItemClick: function() {
             Backbone.history.navigate('#/movies/' + this.model.get('id'));
         }

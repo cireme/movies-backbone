@@ -7,6 +7,9 @@ define([
 
     var MovieFavoritesListView = Backbone.Marionette.CompositeView.extend({
 
+        //
+        // Add event agregator handlers.
+        //
         initialize: function(options) {
             var self = this;
             this.vent = options.vent;
@@ -24,17 +27,16 @@ define([
         itemView: MovieFavoritesItemView,
         itemViewContainer: '.movie-favorites-list',
 
-        /**
-         * event aggregator callback
-         * @param {Movie} movie
-         */
+        //
+        // event aggregator callback.
+        //
         addFavoriteMovie: function(movie) {
             this.collection.add(movie);
         },
 
-        /**
-         * remove favorite movie
-         */
+        //
+        // remove favorite movie.
+        //
         removeFavoriteMovie: function(movie) {
             this.collection.remove(movie);
         }

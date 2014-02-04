@@ -5,8 +5,9 @@ define([
     'models/user',
 ], function(Marionette, Router, Controller, User) {
 
-    // Create new marionette application
-    // 
+    //
+    // Create new marionette application 
+    //
     var App = new Marionette.Application();
 
     //

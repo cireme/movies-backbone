@@ -1,48 +1,52 @@
 define([
-	'backbone',
-	'marionette',
-	'models/comment',
-	'views/comment/commentItemView',
-	'hbs!templates/comment/list'
-	], function(Backbone, Marionette, Comment, CommentItemView, template) {
-   
-	    var CommentView = Backbone.Marionette.CompositeView.extend({
+    'backbone',
+    'marionette',
+    'models/comment',
+    'views/comment/commentItemView',
+    'hbs!templates/comment/list'
+], function(Backbone, Marionette, Comment, CommentItemView, template) {
 
-	    	/**
-	    	 * [initialize description]
-	    	 * @param  {Object} options - target user or movie for comment.
-	    	 */
-	    	initialize: function (options) {	    		
-	    		this.target = options.target;
-	    	},
+    var CommentView = Backbone.Marionette.CompositeView.extend({
 
-	      	template: template,
-	      	itemView: CommentItemView,
-	      	itemViewContainer: '.comment-list',
+        //
+        // @param  {Object} options - target user or movie for comment.
+        // 
+        initialize: function(options) {
+            this.target = options.target;
+        },
 
-	      	ui:{
-	      		commentForm: '.comment-form',
-	      		commentContent: '[role=commentContent]'
-	      	},
+        template: template,
+        itemView: CommentItemView,
+        itemViewContainer: '.comment-list',
 
-	      	events:{
-	      		'submit @ui.commentForm' : 'onCommentFormSubmit'
-	      	},
+        ui: {
+            commentForm: '.comment-form',
+            commentContent: '[role=commentContent]'
+        },
 
-	      	onCommentFormSubmit: function () {
-	      		var self = this;
-	      		var comment = new Comment();
-	      		comment.set('content', this.ui.commentContent.val());
-	      		comment.set(this.target.libelle, this.target.value);
-	      		comment.save(null, { success: function () {
-	      			self.collection.add(comment);
-	      			self.ui.commentContent.val('');
-	      		}});
+        events: {
+            'submit @ui.commentForm': 'onCommentFormSubmit'
+        },
 
-	      		return false;
-	      	}
+        //
+        // Save comment with comment target configuration.
+        // 
+        onCommentFormSubmit: function() {
+            var self = this;
+            var comment = new Comment();
+            comment.set('content', this.ui.commentContent.val());
+            comment.set(this.target.libelle, this.target.value);
+            comment.save(null, {
+                success: function() {
+                    self.collection.add(comment);
+                    self.ui.commentContent.val('');
+                }
+            });
 
-	    });
-	   
-	    return CommentView;
+            return false;
+        }
+
+    });
+
+    return CommentView;
 });

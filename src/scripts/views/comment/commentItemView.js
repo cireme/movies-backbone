@@ -1,26 +1,26 @@
 define([
-	'backbone',
-	'marionette',
-	'hbs!templates/comment/item'
-	], function(Backbone, Marionette, template) {
-   
-	    var CommentItemView = Backbone.Marionette.ItemView.extend({
+    'backbone',
+    'marionette',
+    'hbs!templates/comment/item'
+], function(Backbone, Marionette, template) {
 
-			template: template,
+    var CommentItemView = Backbone.Marionette.ItemView.extend({
 
-			ui:{
-				removeButton: '[role=deleteComment]'
-			},
+        template: template,
 
-			events:{
-				'click @ui.removeButton': 'removeItem'
-			},
+        ui: {
+            removeButton: '[role=deleteComment]'
+        },
 
-			removeItem: function () {
-				this.model.destroy();
-				this.remove();
-			}
-	    });
-	   
-	    return CommentItemView;
+        events: {
+            'click @ui.removeButton': 'removeItem'
+        },
+
+        removeItem: function() {
+            this.model.destroy();
+            this.remove();
+        }
+    });
+
+    return CommentItemView;
 });

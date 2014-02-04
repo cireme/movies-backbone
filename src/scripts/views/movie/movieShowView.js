@@ -1,68 +1,71 @@
 define([
-	'backbone',
-	'marionette',
-	'models/movie',
-	'collections/comments',
-	'views/comment/commentView',
-	'hbs!templates/movie/show'
-	], function(Backbone, Marionette, Movie, CommentCollection, CommentView, template) {
-   
-		var MovieShowView = Backbone.Marionette.ItemView.extend({
+    'backbone',
+    'marionette',
+    'models/movie',
+    'collections/comments',
+    'views/comment/commentView',
+    'hbs!templates/movie/show'
+], function(Backbone, Marionette, Movie, CommentCollection, CommentView, template) {
 
-		  	template: template,
+    var MovieShowView = Backbone.Marionette.ItemView.extend({
 
-		  	initialize: function (options) {
-		  		var self = this;
-		  		this.vent = options.vent;
+        template: template,
 
-		  		this.listenTo(this.model, 'change', this.render);
-		  		
-	    		this.comments = new CommentCollection(this.model.toJSON().comments.items);
-	    		this.commentView = new CommentView({ 
-	    			collection: this.comments,
-	    			target: { libelle: 'movieId', value: self.model.get("id") }
-	    		});
-		  	},
+        initialize: function(options) {
+            var self = this;
+            this.vent = options.vent;
 
-		  	ui:{
-		  		commentArea: '.comment-area',
-		  		likeButton: '[role=like]',
-		  		dislikeButton: '[role=dislike]'
-		  	},
+            this.listenTo(this.model, 'change', this.render);
 
-		  	events:{
-		  		'click @ui.likeButton': 'like',
-		  		'click @ui.dislikeButton': 'dislike'
-		  	},
+            this.comments = new CommentCollection(this.model.toJSON().comments.items);
+            this.commentView = new CommentView({
+                collection: this.comments,
+                target: {
+                    libelle: 'movieId',
+                    value: self.model.get("id")
+                }
+            });
+        },
 
-		  	onRender: function () {
-		  		this.ui.commentArea.html(this.commentView.render().el);
-		  	},
+        ui: {
+            commentArea: '.comment-area',
+            likeButton: '[role=like]',
+            dislikeButton: '[role=dislike]'
+        },
 
-			/**
-			 * like model
-			 */
-			like: function (e) {
-				var self = this;
-				this.model.like(function () {
-					self.vent.trigger('add:favoriteMovies', self.model);
-				},function(error){
-					alert(error);
-				});
-			},
+        events: {
+            'click @ui.likeButton': 'like',
+            'click @ui.dislikeButton': 'dislike'
+        },
 
-			/**
-			 * dislike model
-			 */
-			dislike: function (e) {
-				var self = this;
-				this.model.dislike(function () {
-					self.vent.trigger('remove:favoriteMovies', self.model);
-				},function(error){
-					alert(error);
-				});
-			}
-		});
+        onRender: function() {
+            this.ui.commentArea.html(this.commentView.render().el);
+        },
 
-		return MovieShowView;
+        //
+        // Like model and trigger event.
+        //
+        like: function(e) {
+            var self = this;
+            this.model.like(function() {
+                self.vent.trigger('add:favoriteMovies', self.model);
+            }, function(error) {
+                alert(error);
+            });
+        },
+
+        //
+        // Dislike model and trigger event.
+        //
+        dislike: function(e) {
+            var self = this;
+            this.model.dislike(function() {
+                self.vent.trigger('remove:favoriteMovies', self.model);
+            }, function(error) {
+                alert(error);
+            });
+        }
+    });
+
+    return MovieShowView;
 });

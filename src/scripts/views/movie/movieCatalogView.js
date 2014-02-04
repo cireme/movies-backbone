@@ -10,11 +10,17 @@ define([
 
         template: template,
 
+        //
+        // Define regions in layout.
+        //
         regions: {
             'form': '[data-region=form]',
             'list': '[data-region=list]'
         },
 
+        //
+        // instantiate MovieCollection and fetch.
+        //
         initialize: function() {
             this.collection = new MovieCollection();
             this.collection.fetch({
@@ -24,6 +30,9 @@ define([
             });
         },
 
+        //
+        // Render form and list views in layout regions.
+        //
         onRender: function() {
             var formView = new MovieSearchForm({
                 collection: this.collection
